@@ -3,55 +3,58 @@
 
 typedef struct ListNode {
 	int data;
-	struct ListNode *link;
+	struct ListNode* next;
 } ListNode;
 
-ListNode* insert_first(ListNode *head, int data) {
+ListNode* insert_first(ListNode* head, int data) {
 	ListNode *node = (ListNode*)malloc(sizeof(ListNode));
-
-	head->data = data;
+	node->data = data;
 	if (head == NULL) {
 		head = node;
-		head->data = data;
+		head->next = head;
 	} else {
-		node->link = head->link;
-		head->link = node;
+		node->next = head->next;
+		head->next = node;
 	}
-
 	return head;
 }
 
 ListNode* insert_last(ListNode *head, int data) {
 	ListNode *node = (ListNode*)malloc(sizeof(ListNode));
 	node->data = data;
-	if (head == NULL) {
+	if (head == NULL){
 		head = node;
+		node->next = head;
 	} else {
-   	node->link = head->link;
-		head->link = node;
+		node->next = head->next;
+		head->next = node;
 		head = node;
-	}	
+	}
 	return head;
 }
 
-void print_list(ListNode *head) {
+void print_list(ListNode* head) {
+	ListNode *p;
 	if (head == NULL) return;
-	ListNode *p = head->link;
+	p = head->next;
 
-	while(p != head) {
-		printf("%d", p->data);
-		p = p->link;
-	}
+	while (p != head) {
+		printf("%d => ", p->data);
+		p = p->next;
+	}	
+
 	printf("%d", head->data);
 }
 
 int main(void) {
-	ListNode *head = NULL;
+ ListNode *head = NULL;
 
-	head = insert_last(head, 20);
-	head = insert_last(head, 30);
-	head = insert_last(head, 40);
-	head = insert_first(head, 10);
+  head =	insert_first(head, 10);
+	head =	insert_first(head, 20);
+	head =	insert_first(head, 30);
+	head = insert_last(head, 100);
+	head = insert_last(head, 200);
+	head = insert_last(head, 300);
 	print_list(head);
 	return 0;
 }
