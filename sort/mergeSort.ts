@@ -48,3 +48,7 @@ function main() {
 }
 
 main();
+
+// wortst case - O(nlog(n)) compare every element
+// best case - - O(nlog(n)) compare half of element
+// very stable algorithm
