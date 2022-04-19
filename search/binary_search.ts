@@ -17,3 +17,24 @@ function searchBinaryRecursive(array: number[], item: number): number {
 }
 
 console.log(searchBinaryRecursive(array, 29));
+
+function searchBinaryIterate(
+  list: number[],
+  key: number,
+  low: number,
+  high: number
+) {
+  while (low <= high) {
+    const middle = Math.floor((low + high) / 2);
+    if (key === list[middle]) return middle;
+    else if (key < list[middle]) {
+      high = middle - 1;
+    } else {
+      low = middle + 1;
+    }
+  }
+
+  return -1;
+}
+
+console.log(searchBinaryIterate(array, 30, 0, array.length - 1));
