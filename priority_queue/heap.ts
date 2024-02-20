@@ -14,7 +14,6 @@ class Heap implements PriorityQueue {
   insert(data: number) {
     this.heap.push(data);
     this.#bubbleUp();
-    this.print();
   }
 
   #bubbleUp() {
@@ -43,7 +42,6 @@ class Heap implements PriorityQueue {
     this.heap[0] = this.heap[this.heap.length - 1];
     this.heap.pop();
     this.#bubbleDown();
-    this.print();
 
     return result;
   }
@@ -87,26 +85,6 @@ class Heap implements PriorityQueue {
   }
 
   peek() {
-    this.print();
     return this.heap[0];
   }
-
-  print() {
-    console.log(this.heap);
-  }
 }
-
-function test() {
-  const heap = new Heap();
-
-  heap.insert(3);
-  heap.insert(2);
-  heap.insert(5);
-  heap.insert(11);
-  heap.delete();
-  heap.insert(15);
-  heap.delete();
-  heap.insert(13);
-}
-
-test();
