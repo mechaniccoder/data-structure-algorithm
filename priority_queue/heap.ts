@@ -66,12 +66,12 @@ class Heap implements PriorityQueue {
 
       if (rightChildIndex >= size) {
         maxChildIndex = leftChildIndex;
+      } else {
+        maxChildIndex =
+          this.heap[leftChildIndex] >= this.heap[rightChildIndex]
+            ? leftChildIndex
+            : rightChildIndex;
       }
-
-      maxChildIndex =
-        this.heap[leftChildIndex] >= this.heap[rightChildIndex]
-          ? leftChildIndex
-          : rightChildIndex;
 
       if (this.heap[index] >= this.heap[maxChildIndex]) break;
 
