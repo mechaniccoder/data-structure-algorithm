@@ -1,114 +1,38 @@
-interface PriorityQueue {
-  insert(data: number): void;
-  delete(): void;
-  peek(): void;
-}
+function heapify(array: number[], size: number, index: number) {
+  let largest = index;
+  const left = 2 * index + 1;
+  const right = 2 * index + 2;
 
-class Heap implements PriorityQueue {
-  heap: number[];
-
-  constructor(array: number[]) {
-    this.heap = [];
-
-    array.forEach((element) => {
-      this.insert(element);
-    });
+  if (left < size && array[left] > array[largest]) {
+    largest = left;
   }
 
-  static heapify(array: number[]) {
-    return new Heap(array);
+  if (right < size && array[right] > array[largest]) {
+    largest = right;
   }
 
-  insert(data: number) {
-    this.heap.push(data);
-    this.#bubbleUp();
-  }
-
-  #bubbleUp() {
-    let index = this.heap.length - 1;
-    let parentIndex;
-
-    while (index > 0) {
-      parentIndex = Math.floor((index - 1) / 2);
-
-      if (this.heap[index] <= this.heap[parentIndex]) break;
-
-      [this.heap[index], this.heap[parentIndex]] = [
-        this.heap[parentIndex],
-        this.heap[index],
-      ];
-
-      index = parentIndex;
-    }
-  }
-
-  delete() {
-    if (this.heap.length === 0) return;
-
-    const result = this.heap[0];
-
-    this.heap[0] = this.heap[this.heap.length - 1];
-    this.heap.pop();
-    this.#bubbleDown();
-
-    return result;
-  }
-
-  #leftChildIndex(index: number) {
-    return 2 * (index + 1) - 1;
-  }
-
-  #rightChildIndex(index: number) {
-    return 2 * (index + 1);
-  }
-
-  #bubbleDown() {
-    let index = 0;
-    const size = this.heap.length;
-
-    while (this.#leftChildIndex(index) < size) {
-      const leftChildIndex = this.#leftChildIndex(index);
-      const rightChildIndex = this.#rightChildIndex(index);
-
-      let maxChildIndex;
-
-      if (rightChildIndex >= size) {
-        maxChildIndex = leftChildIndex;
-      } else {
-        maxChildIndex =
-          this.heap[leftChildIndex] >= this.heap[rightChildIndex]
-            ? leftChildIndex
-            : rightChildIndex;
-      }
-
-      if (this.heap[index] >= this.heap[maxChildIndex]) break;
-
-      [this.heap[index], this.heap[maxChildIndex]] = [
-        this.heap[maxChildIndex],
-        this.heap[index],
-      ];
-
-      index = maxChildIndex;
-    }
-  }
-
-  peek() {
-    return this.heap[0];
+  if (largest !== index) {
+    [array[index], array[largest]] = [array[largest], array[index]];
+    heapify(array, size, largest);
   }
 }
 
 function heapSort(array: number[]) {
-  const heap = Heap.heapify(array);
-
-  const result = [];
-
-  while (heap.peek()) {
-    result.push(heap.delete());
+  for (let i = Math.floor(array.length / 2) - 1; i >= 0; i--) {
+    heapify(array, array.length, i);
   }
 
-  return result;
+  for (let j = array.length - 1; j >= 0; j--) {
+    [array[0], array[j]] = [array[j], array[0]];
+
+    heapify(array, j, 0);
+  }
+
+  return array;
 }
 
-heapSort([3, 2, 1, 5, 4]);
+const result = heapSort([12, 11, 13, 5, 6, 7]);
+
+console.log(result);
 
 export {};
